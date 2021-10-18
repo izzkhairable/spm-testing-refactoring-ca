@@ -5,17 +5,26 @@ from countryCharges import CountryCharges
 class LandShippingCalculator(ShippingCalculator):
     def __init__(self, custNm, custContact):
         ShippingCalculator.__init__(self, custNm, custContact)
+        self._base = CountryCharges()
 
-    def computeCharges(self):
-        base = CountryCharges()
-        baseCharge = base.getBaseCharge(
+    def getBaseCharges(self):
+        return self._base.getBaseCharge(
             super().getFromCountry(), super().getToCountry()
         )
-        # Compute Packaging Charges - 10% discount
-        packagingCharge = super().getSize() * super().getWeight() * 0.90
-        # Compute Customer Charges
-        customCharges = base.getCustomCharges(super().getToCountry())
-        landFreightCharges = (
-            (super().getSize() * 0.25) + (super().getWeight() * 0.75) + 10
+
+    def getCustomCharges(self):
+        return self._base.getCustomCharges(super().getToCountry())
+
+    def getPackagingCharges(self):
+        return super().getSize() * super().getWeight() * 0.90
+
+    def getLandFreightCharges(self):
+        return (super().getSize() * 0.25) + (super().getWeight() * 0.75) + 10
+
+    def computeCharges(self):
+        return (
+            self.getBaseCharges()
+            + self.getPackagingCharges()
+            + self.getCustomCharges()
+            + self.getLandFreightCharges()
         )
-        return baseCharge + packagingCharge + customCharges + landFreightCharges
