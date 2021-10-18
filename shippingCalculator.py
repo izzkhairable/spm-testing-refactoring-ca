@@ -3,14 +3,8 @@ from countryCharges import CountryCharges
 
 
 class ShippingCalculator(ABC):
-    def __init__(self, custNm, custContact):
-        self.__customerContact = custContact
-        self.__customerName = custNm
+    def __init__(self):
         self.__base = CountryCharges()
-
-    def setToAddContact(self, toAdd, toCon):
-        self.__toAddress = toAdd
-        self.__toContact = toCon
 
     def setFromToCountry(self, frCountry, toCountry):
         self.__fromCountry = frCountry

@@ -2,8 +2,8 @@ from shippingCalculator import ShippingCalculator
 
 
 class AirShippingCalculator(ShippingCalculator):
-    def __init__(self, custNm, custContact):
-        ShippingCalculator.__init__(self, custNm, custContact)
+    def __init__(self):
+        ShippingCalculator.__init__(self)
 
     def computeCharges(self):
         return (
