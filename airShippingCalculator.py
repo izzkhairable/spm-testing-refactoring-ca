@@ -1,30 +1,14 @@
 from shippingCalculator import ShippingCalculator
-from countryCharges import CountryCharges
 
 
 class AirShippingCalculator(ShippingCalculator):
     def __init__(self, custNm, custContact):
         ShippingCalculator.__init__(self, custNm, custContact)
-        self._base = CountryCharges()
-
-    def getBaseCharges(self):
-        return self._base.getBaseCharge(
-            super().getFromCountry(), super().getToCountry()
-        )
-
-    def getCustomCharges(self):
-        return self._base.getCustomCharges(super().getToCountry())
-
-    def getPackagingCharges(self):
-        return super().getSize() * super().getWeight()
-
-    def getAirFreightCharges(self):
-        return (super().getSize() * 3) + (super().getWeight() * 4)
 
     def computeCharges(self):
         return (
-            self.getBaseCharges()
-            + self.getPackagingCharges()
-            + self.getCustomCharges()
-            + self.getAirFreightCharges()
+            super().getBaseCharges()
+            + super().getCustomCharges()
+            + super().getPackagingCharges()
+            + super().getFreightCharges(3, 4)
         )
